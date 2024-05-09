@@ -1,13 +1,19 @@
 {
-  "name": "telegram-bot-vercel-boilerplate",
-  "version": "1.1.0",
-  "description": "Telegram Bot Vercel Boilerplate",
+  "name": "bonafragancebot",
+  "version": "1.0.0",
+  "description": "Telegram Bot For Sales Fragances",
   "main": "src/index.ts",
-  "author": "Mark Pavlov (https://github.com/sollidy)",
-  "homepage": "https://github.com/sollidy/telegram-bot-vercel-boilerplate",
+  "author": "BonaFragance (https://bonafragance.com)",
+  "homepage": "https://bonafragance.com",
   "dependencies": {
+    "@langchain/community": "^0.0.43",
+    "@langchain/groq": "^0.0.8",
+    "@langchain/openai": "^0.0.25",
     "@vercel/node": "^3.0.22",
+    "cheerio": "^1.0.0-rc.12",
     "dotenv-cli": "^7.4.1",
+    "html-to-text": "^9.0.5",
+    "langchain": "^0.1.30",
     "telegraf": "^4.16.3"
   },
   "devDependencies": {

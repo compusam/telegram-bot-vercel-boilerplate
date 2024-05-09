@@ -15,7 +15,8 @@ const greeting = () => async (ctx: Context) => {
   const userName = `${ctx.message?.from.first_name} ${ctx.message?.from.last_name}`;
 
   if (messageId) {
-    await replyToMessage(ctx, messageId, `Hello, ${userName}!`);
+    // ctx.sendChatAction('typing');
+    await replyToMessage(ctx, messageId, `Hola, ${userName}!`);
   }
 };
 
