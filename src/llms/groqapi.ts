@@ -14,6 +14,7 @@ import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
 import { HtmlToTextTransformer } from "@langchain/community/document_transformers/html_to_text";
 import { MemoryVectorStore } from "langchain/vectorstores/memory";
 import { OpenAIEmbeddings } from "@langchain/openai";
+import { log } from 'console';
 
 
 const embeddings = new OpenAIEmbeddings({
@@ -26,6 +27,21 @@ const embeddings = new OpenAIEmbeddings({
 const debug = createDebug('bot:handleRequestGroqAPI');
 
 const groqapi = () => async (ctx: Context) => {
+// debug(ctx.message);
+
+if('successful_payment' in ctx.message!){
+  debug("El cliente pagó: ")
+  debug(ctx.message.successful_payment);
+  let payloadPaymentJSON = JSON.parse(JSON.parse(JSON.stringify(ctx.message.successful_payment.invoice_payload)));
+  debug(payloadPaymentJSON);
+  await ctx.replyWithAnimation("https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcG9raXpjcWJ1enZqMm5heDhtdXhzODlzM2l4MndmOXd6ODg1ejhwayZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/Y0Q6qO4v3xVlD2RkZ6/giphy.gif")
+  await ctx.reply("Nos estaremos comunicando contigo para los siguientes pasos para la entrega de tu fragancia");
+  await ctx.reply("Tu número de pedido es: "+payloadPaymentJSON.unique_id +" Te recomendamos guardarlo para cualquier duda o aclaración");
+}
+else
+{
+
+
 
   debug("Iniciando el handleRequest");
   const prompt = ChatPromptTemplate.fromMessages([
@@ -175,12 +191,14 @@ const provider_token = process.env.PROVIDER_TOKEN || "sin Token";
       title: titleProduct, // Product name, 1-32 characters
       description: titleProduct, // Product description, 1-255 characters
       photo_url: imageProduct,
+      need_email: true,
+      send_email_to_provider: true,
       currency: 'MXN', // ISO 4217 Three-Letter Currency Code
       prices: [{ label: titleProduct, amount: parseInt(priceProduct) * 100 }], // Price breakdown, serialized list of components in JSON format 100 kopecks * 100 = 100 rubles
       total_amount:  parseInt(priceProduct) * 100,
       payload: JSON.stringify( { // The payload of the invoice, as determined by the bot, 1-128 bytes. This will not be visible to the user, use it for your internal processes.
         unique_id: `${ctx.chat?.id}_${Number(new Date())}`,
-        provider_token: provider_token
+        username: ctx.from?.username
       })
      }
 
@@ -191,7 +209,7 @@ const provider_token = process.env.PROVIDER_TOKEN || "sin Token";
 // debug(invoiceLink);
 //   Markup.button.url("Compartir",'https://t.me/share?url='+invoiceLink),
 const replyOptions = Markup.inlineKeyboard([
-  Markup.button.pay("Comprar"),
+  Markup.button.pay("Comprar $"+priceProduct+' MXN'),
 
 ]);
   await ctx.reply(responseLLM.content.toString()); 
@@ -252,6 +270,7 @@ const replyOptions = Markup.inlineKeyboard([
 //     }
     
 //   })
-
+//else branch
+}
 }
 export { groqapi };

@@ -4,6 +4,7 @@
   "description": "Telegram Bot For Sales Fragances",
   "main": "src/index.ts",
   "author": "BonaFragance (https://bonafragance.com)",
+  "license": "BSD-3-Clause",
   "homepage": "https://bonafragance.com",
   "dependencies": {
     "@langchain/community": "^0.0.43",
