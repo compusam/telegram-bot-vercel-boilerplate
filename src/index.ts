@@ -16,8 +16,8 @@ const bot = new Telegraf(BOT_TOKEN);
 const VERCEL_URL = `${process.env.VERCEL_URL}`;
 // for description BOT
 try {
-  bot.telegram.setWebhook(`${VERCEL_URL}/api`);
-  const getWebhookInfo = bot.telegram.getWebhookInfo();
+  // bot.telegram.setWebhook(`${VERCEL_URL}/api`);
+  // const getWebhookInfo = bot.telegram.getWebhookInfo();
   const description = "Gracias por utilizar BonaFraganceBot, seré tu ayuda para comprar de forma rápida tu fragancia preferida";
   debug("Iniciando SetMyDescription");
   const response_setDescription = async () => {
