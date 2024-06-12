@@ -31,6 +31,8 @@ const production = async (
   }
 
   if (req.method === 'POST') {
+    console.log('Estamos en POST');
+    console.log(`Req Body: ${req.body}`);
     await bot.handleUpdate(req.body as unknown as Update, res);
     console.log(req.body);
     res.status(200).json(req.body);
