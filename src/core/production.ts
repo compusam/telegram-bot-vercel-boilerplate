@@ -13,6 +13,8 @@ const production = async (
   res: VercelResponse,
   bot: Telegraf<Context<Update>>,
 ) => {
+  console.log('Bot runs in production mode');
+  console.log(`setting webhook: ${VERCEL_URL}`);
   debug('Bot runs in production mode');
   debug(`setting webhook: ${VERCEL_URL}`);
 
@@ -30,6 +32,8 @@ const production = async (
 
   if (req.method === 'POST') {
     await bot.handleUpdate(req.body as unknown as Update, res);
+    console.log(req.body);
+    res.status(200).json(req.body);
   } else {
     res.status(200).json('Listening to bot events...');
   }
