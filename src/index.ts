@@ -50,13 +50,6 @@ bot.start((ctx) => {
 
 bot.command('about', about());
 bot.command('search', search());
-
-
-
-
-
-
-
 bot.on('message', groqapi());
 bot.on("pre_checkout_query", ctx => ctx.answerPreCheckoutQuery(true));
 bot.on("successful_payment", () => console.log("Pagado"));

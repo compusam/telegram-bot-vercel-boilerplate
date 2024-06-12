@@ -33,9 +33,19 @@ const production = async (
   if (req.method === 'POST') {
     console.log('Estamos en POST');
     console.log(`Req Body: ${JSON.stringify(req.body)}`);
-    await bot.handleUpdate(req.body as unknown as Update, res);
-    console.log(req.body);
-    res.status(200).json(req.body);
+
+    try {
+      // Ensure that this is a message being sent
+      await bot.handleUpdate(req.body as unknown as Update, res);
+      res.send("OK");
+    } catch (error) {
+      // If there was an error sending our message then we
+      // can log it into the Vercel console
+      console.error("Error sending message",JSON.stringify(error));
+      
+    }
+    
+    
   } else {
     res.status(200).json('Listening to bot events...');
   }
