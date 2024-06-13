@@ -43,7 +43,8 @@ else
 
 
 
-  debug("Iniciando el handleRequest");
+  
+  console.log("Iniciando el handleRequest");
   const prompt = ChatPromptTemplate.fromMessages([
     ["system", "Eres un vendedor profesional de perfumes para dama y caballero. Debes brindar respuesta a los usuarios que preguntan por perfumes, los precios y usos de cada perfume además dependiendo la fecha recomendar alguna fragancia para el día o la noche.\nLa respuesta debe ser desde la tienda de BonaFragance, las respuestas deben ser breves y concisas."],
     ["human", "{input}"],
@@ -95,7 +96,7 @@ else
         new HumanMessage(ctx.text || "¿Cuál perfume me recomiendas para caballero?"),
       ]);
 
-// debug(response.tool_calls)
+console.log(response_tools.tool_calls)
 let responseToolscalls = response_tools.tool_calls
 let fragancename = ""
 // debug(responseToolscalls)
@@ -108,6 +109,7 @@ responseToolscalls?.forEach(function (value) {
 await ctx.sendChatAction('typing');
 //  await ctx.reply("Revisando..., en breve revisaremos y te contestaremos");
 const docsFromSupplier = await get_fragance_from_supplier(fragancename);
+await ctx.sendChatAction('typing');
 // console.log(docsFromSupplier);
 const textToSplitFromSupplier = docsFromSupplier || "No tenemos ese perfume | |";
 const productPartsArray = textToSplitFromSupplier.split("|");
@@ -178,7 +180,9 @@ De no encontrar la información del perfume o fragancia en el context debes menc
     new SystemMessage(systemMessageTemplate),
     new HumanMessage(ctx.text || "¿Cuál perfume me recomiendas para caballero?"),
   ];
-  const responseLLM = await chatModel.invoke(messages); 
+  await ctx.sendChatAction('typing');
+  const responseLLM = await chatModel.invoke(messages);
+  await ctx.sendChatAction('typing');
   // console.log(responseLLM); 
 
 // parseInt(priceProduct)

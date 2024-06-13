@@ -13,10 +13,10 @@ const production = async (
   res: VercelResponse,
   bot: Telegraf<Context<Update>>,
 ) => {
-  console.log('Bot runs in production mode');
-  console.log(`setting webhook: ${VERCEL_URL}`);
-  debug('Bot runs in production mode');
-  debug(`setting webhook: ${VERCEL_URL}`);
+  // console.log('Bot runs in production mode');
+  // console.log(`setting webhook: ${VERCEL_URL}`);
+  // debug('Bot runs in production mode');
+  // debug(`setting webhook: ${VERCEL_URL}`);
 
   if (!VERCEL_URL) {
     throw new Error('VERCEL_URL is not set.');
@@ -24,11 +24,11 @@ const production = async (
 
   const getWebhookInfo = await bot.telegram.getWebhookInfo();
   if (getWebhookInfo.url !== VERCEL_URL + '/api') {
-    debug(`deleting webhook ${VERCEL_URL}`);
-    console.log('deleting webhook');
+    // debug(`deleting webhook ${VERCEL_URL}`);
+    // console.log('deleting webhook');
     await bot.telegram.deleteWebhook();
-    debug(`setting webhook: ${VERCEL_URL}/api`);
-    console.log('setting webhook');
+    // debug(`setting webhook: ${VERCEL_URL}/api`);
+    // console.log('setting webhook');
     await bot.telegram.setWebhook(`${VERCEL_URL}/api`);
   }
 
@@ -49,9 +49,9 @@ const production = async (
     
     
   } else {
-    res.status(200).json('Listening to bot events...');
+    res.status(200).json('Listening to bot events in Prod...');
   }
-  debug(`starting webhook on port: ${PORT}`);
-  console.error(`starting webhook on port: ${PORT}`);
+  // debug(`starting webhook on port: ${PORT}`);
+  // console.error(`starting webhook on port: ${PORT}`);
 };
 export { production };
