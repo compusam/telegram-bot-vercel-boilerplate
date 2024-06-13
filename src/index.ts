@@ -79,13 +79,13 @@ bot.on("successful_payment", () => console.log("Pagado"));
 //   }
 //    };
 
-// export const startVercel = async (req: VercelRequest, res: VercelResponse) => {
-//   await production(req, res, bot);
-// };
-
 export const startVercel = async (req: VercelRequest, res: VercelResponse) => {
-  development(bot);
+  await production(req, res, bot);
 };
+
+// export const startVercel = async (req: VercelRequest, res: VercelResponse) => {
+//   development(bot);
+// };
 
 
   
