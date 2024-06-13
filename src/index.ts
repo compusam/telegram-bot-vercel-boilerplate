@@ -7,7 +7,7 @@ import { greeting } from './text';
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { development, production } from './core';
 import createDebug from 'debug';
-
+import { Update } from 'telegraf/typings/core/types/typegram';
 
 const BOT_TOKEN = process.env.BOT_TOKEN || '';
 const ENVIRONMENT = process.env.NODE_ENV || '';
@@ -54,11 +54,34 @@ bot.on('message', groqapi());
 bot.on("pre_checkout_query", ctx => ctx.answerPreCheckoutQuery(true));
 bot.on("successful_payment", () => console.log("Pagado"));
 
-//prod mode (Vercel)
 
 export const startVercel = async (req: VercelRequest, res: VercelResponse) => {
-  await production(req, res, bot);
-};
+    
+  if (req.method === 'POST') {
+    console.log('Estamos en POST en Index');
+    console.log(`Req Body: ${JSON.stringify(req.body)}`);
+
+    try {
+      // Ensure that this is a message being sent
+      await bot.handleUpdate(req.body as unknown as Update, res);
+      console.log(`se recibe body y se manda a handleUpdate`);
+      res.send("OK");
+    } catch (error) {
+      // If there was an error sending our message then we
+      // can log it into the Vercel console
+      console.error("Error sending message",JSON.stringify(error));
+      
+    }
+    
+    
+  } else {
+    res.status(200).json('Listening to bot events from Index...');
+  }
+   };
+
+// export const startVercel = async (req: VercelRequest, res: VercelResponse) => {
+//   await production(req, res, bot);
+// };
 
 
 
