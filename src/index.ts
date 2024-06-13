@@ -55,36 +55,36 @@ bot.on("pre_checkout_query", ctx => ctx.answerPreCheckoutQuery(true));
 bot.on("successful_payment", () => console.log("Pagado"));
 
 
-export const startVercel = async (req: VercelRequest, res: VercelResponse) => {
+// export const startVercel = async (req: VercelRequest, res: VercelResponse) => {
     
-  if (req.method === 'POST') {
-    console.log('Estamos en POST en Index');
-    console.log(`Req Body: ${JSON.stringify(req.body)}`);
+//   if (req.method === 'POST') {
+//     console.log('Estamos en POST en Index');
+//     console.log(`Req Body: ${JSON.stringify(req.body)}`);
 
-    try {
-      // Ensure that this is a message being sent
-      await bot.handleUpdate(req.body as unknown as Update, res);
-      console.log(`se recibe body y se manda a handleUpdate`);
-      res.send("OK");
-    } catch (error) {
-      // If there was an error sending our message then we
-      // can log it into the Vercel console
-      console.error("Error sending message",JSON.stringify(error));
+//     try {
+//       // Ensure that this is a message being sent
+//       await bot.handleUpdate(req.body as unknown as Update, res);
+//       console.log(`se recibe body y se manda a handleUpdate`);
+//       res.send("OK");
+//     } catch (error) {
+//       // If there was an error sending our message then we
+//       // can log it into the Vercel console
+//       console.error("Error sending message",JSON.stringify(error));
       
-    }
+//     }
     
     
-  } else {
-    res.status(200).json('Listening to bot events from Index...');
-  }
-   };
+//   } else {
+//     res.status(200).json('Listening to bot events from Index...');
+//   }
+//    };
 
 // export const startVercel = async (req: VercelRequest, res: VercelResponse) => {
 //   await production(req, res, bot);
 // };
 
 
-
+development(bot);
 
   
   // Expected output: "Success!"

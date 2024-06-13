@@ -5,6 +5,7 @@ import createDebug from 'debug';
 const debug = createDebug('bot:dev');
 
 const development = async (bot: Telegraf<Context<Update>>) => {
+  console.log('Estamos en Development Poolling');
   const botInfo = (await bot.telegram.getMe()).username;
 
   debug('Bot runs in development mode');
