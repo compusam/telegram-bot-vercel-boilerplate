@@ -1,6 +1,7 @@
 import { CheerioWebBaseLoader } from "langchain/document_loaders/web/cheerio";
 
 async function get_fragance_from_supplier(fragancename: string) {
+  console.log("Trayendonos la informacion en getFragancefromSupplier");
     let urlEncodeFraganceName = encodeURI(fragancename)
     const loader = new CheerioWebBaseLoader(
         "https://magnaperfumes.com/search.php?search_query="+urlEncodeFraganceName+"&section=product",

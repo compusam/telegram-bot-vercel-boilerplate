@@ -97,6 +97,7 @@ else
       ]);
 
 console.log(response_tools.tool_calls)
+await ctx.reply("Revisando...");
 let responseToolscalls = response_tools.tool_calls
 let fragancename = ""
 // debug(responseToolscalls)
