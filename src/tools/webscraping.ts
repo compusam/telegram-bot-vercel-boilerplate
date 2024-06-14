@@ -47,6 +47,7 @@ async function get_fragance_from_supplier(fragancename: string) {
     //     price: 45,
         
     //   });
+    console.log('ProducText: ',productText);
     return productText;
     // return docs;
     
