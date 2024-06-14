@@ -110,8 +110,9 @@ responseToolscalls?.forEach(function (value) {
 await ctx.sendChatAction('typing');
 //  await ctx.reply("Revisando..., en breve revisaremos y te contestaremos");
 const docsFromSupplier = await get_fragance_from_supplier(fragancename);
+await ctx.reply("Obteniendo información...");
 await ctx.sendChatAction('typing');
-// console.log(docsFromSupplier);
+console.log(docsFromSupplier);
 const textToSplitFromSupplier = docsFromSupplier || "No tenemos ese perfume | |";
 const productPartsArray = textToSplitFromSupplier.split("|");
 let idProduct = productPartsArray[0];
@@ -184,7 +185,7 @@ De no encontrar la información del perfume o fragancia en el context debes menc
   await ctx.sendChatAction('typing');
   const responseLLM = await chatModel.invoke(messages);
   await ctx.sendChatAction('typing');
-  // console.log(responseLLM); 
+  console.log(responseLLM); 
 
 // parseInt(priceProduct)
 const provider_token = process.env.PROVIDER_TOKEN || "sin Token";
@@ -217,8 +218,9 @@ const replyOptions = Markup.inlineKeyboard([
   Markup.button.pay("Comprar $"+priceProduct+' MXN'),
 
 ]);
+await ctx.sendChatAction('typing');
   await ctx.reply(responseLLM.content.toString()); 
-  await ctx.sendChatAction('typing'); 
+   
   // ctx.replyWithPhoto(imageProduct)
   const replyInvoiceResponse = await ctx.replyWithInvoice(invoice,replyOptions);
   // const confirmationCheckout = await ctx.answerPreCheckoutQuery(true);  
