@@ -39,7 +39,7 @@ const production = async (
     try {
       // Ensure that this is a message being sent
       await bot.handleUpdate(req.body as unknown as Update, res);
-      res.send("OK");
+      //res.send("OK");
     } catch (error) {
       // If there was an error sending our message then we
       // can log it into the Vercel console

@@ -1,6 +1,4 @@
 import { Telegraf,Context } from 'telegraf';
-
-
 import { about,search } from './commands';
 import { llmopenai, groqapi } from './llms';
 import { greeting } from './text';
