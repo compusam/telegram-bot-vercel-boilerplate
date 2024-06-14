@@ -1,5 +1,4 @@
 import { Context,Markup } from 'telegraf';
-
 import createDebug from 'debug';
 
 // Nativo del SDK de groq
@@ -12,11 +11,11 @@ import { ChatGroq } from "@langchain/groq";
 import { ChatPromptTemplate } from "@langchain/core/prompts";
 import { SystemMessage, HumanMessage } from "@langchain/core/messages";
 import { get_fragance_from_supplier } from '../tools';
-import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
-import { HtmlToTextTransformer } from "@langchain/community/document_transformers/html_to_text";
-import { MemoryVectorStore } from "langchain/vectorstores/memory";
+// import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
+// import { HtmlToTextTransformer } from "@langchain/community/document_transformers/html_to_text";
+// import { MemoryVectorStore } from "langchain/vectorstores/memory";
 import { OpenAIEmbeddings } from "@langchain/openai";
-import { log } from 'console';
+
 
 
 const embeddings = new OpenAIEmbeddings({
@@ -49,7 +48,7 @@ else
 
 
   
-  console.log("Iniciando el handleRequest");
+  // console.log("Iniciando el handleRequest");
   const prompt = ChatPromptTemplate.fromMessages([
     ["system", "Eres un vendedor profesional de perfumes para dama y caballero. Debes brindar respuesta a los usuarios que preguntan por perfumes, los precios y usos de cada perfume además dependiendo la fecha recomendar alguna fragancia para el día o la noche.\nLa respuesta debe ser desde la tienda de BonaFragance, las respuestas deben ser breves y concisas."],
     ["human", "{input}"],
@@ -101,8 +100,8 @@ else
         new HumanMessage(ctx.text || "¿Cuál perfume me recomiendas para caballero?"),
       ]);
 
-console.log(response_tools.tool_calls)
-await ctx.reply("Revisando...");
+// console.log(response_tools.tool_calls)
+// await ctx.reply("Revisando...");
 let responseToolscalls = response_tools.tool_calls
 let fragancename = ""
 // debug(responseToolscalls)
@@ -112,13 +111,19 @@ responseToolscalls?.forEach(function (value) {
     fragancename = value.args.fragancename
    
 });
-await ctx.sendChatAction('typing');
+// await ctx.sendChatAction('typing');
 //  await ctx.reply("Revisando..., en breve revisaremos y te contestaremos");
-console.log("Iniciando la funcion getfragancefromsupplier");
-console.log("ChatsIds",chatId,chatIdFrom);
+// console.log("Iniciando la funcion getfragancefromsupplier");
+// console.log("ChatsIds",chatId,chatIdFrom);
+let docsFromSupplier = null;
+try {
+  docsFromSupplier = await get_fragance_from_supplier(fragancename);
+}
+catch (error) {
+  console.error("Error en getfragancefromsupplier",JSON.stringify(error));
+}
 
-const docsFromSupplier = await get_fragance_from_supplier(fragancename);
-await ctx.telegram.sendMessage('-455928189',"Imprimiendo docsFromsupplier");
+await ctx.telegram.sendMessage(455928189,"Imprimiendo docsFromsupplier");
 // await ctx.reply("Obteniendo información...");
 // await ctx.sendChatAction('typing');
 
@@ -192,9 +197,9 @@ De no encontrar la información del perfume o fragancia en el context debes menc
     new SystemMessage(systemMessageTemplate),
     new HumanMessage(ctx.text || "¿Cuál perfume me recomiendas para caballero?"),
   ];
-  await ctx.sendChatAction('typing');
+  
   const responseLLM = await chatModel.invoke(messages);
-  await ctx.sendChatAction('typing');
+  
   console.log(responseLLM); 
 
 // parseInt(priceProduct)
@@ -228,7 +233,7 @@ const replyOptions = Markup.inlineKeyboard([
   Markup.button.pay("Comprar $"+priceProduct+' MXN'),
 
 ]);
-await ctx.sendChatAction('typing');
+
   await ctx.reply(responseLLM.content.toString()); 
    
   // ctx.replyWithPhoto(imageProduct)
