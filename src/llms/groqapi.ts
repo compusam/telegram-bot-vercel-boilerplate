@@ -123,7 +123,7 @@ catch (error) {
   console.error("Error en getfragancefromsupplier",JSON.stringify(error));
 }
 
-await ctx.telegram.sendMessage(455928189,"Imprimiendo docsFromsupplier");
+// await ctx.telegram.sendMessage(455928189,"Imprimiendo docsFromsupplier");
 // await ctx.reply("Obteniendo información...");
 // await ctx.sendChatAction('typing');
 
