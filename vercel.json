@@ -7,5 +7,10 @@
       "destination": "api/index.ts"
     }
   ],
+  "functions": {
+    "api/index": {
+      "maxDuration": 60 
+    }
+  },
   "redirects": [{ "source": "/", "destination": "/api", "permanent": false }]
 }
