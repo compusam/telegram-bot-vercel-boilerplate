@@ -117,7 +117,7 @@ await ctx.sendChatAction('typing');
 console.log("Iniciando la funcion getfragancefromsupplier");
 console.log("ChatsIds",chatId,chatIdFrom);
 const docsFromSupplier = await get_fragance_from_supplier(fragancename);
-await ctx.telegram.sendMessage(chatIdFrom,"Imprimiendo docsFromsupplier");
+await ctx.telegram.sendMessage('-455928189',"Imprimiendo docsFromsupplier");
 // await ctx.reply("Obteniendo información...");
 // await ctx.sendChatAction('typing');
 
