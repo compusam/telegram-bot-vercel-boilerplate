@@ -32,7 +32,7 @@ const debug = createDebug('bot:handleRequestGroqAPI');
 const groqapi = () => async (ctx: Context) => {
 // debug(ctx.message);
 const chatId = ctx.chat?.id;
-const chatIdFrom = ctx.from?.id;
+const chatIdFrom = ctx.from?.id || 0;
 
 if('successful_payment' in ctx.message!){
   debug("El cliente pagó: ")
@@ -117,7 +117,7 @@ await ctx.sendChatAction('typing');
 console.log("Iniciando la funcion getfragancefromsupplier");
 console.log("ChatsIds",chatId,chatIdFrom);
 const docsFromSupplier = await get_fragance_from_supplier(fragancename);
-
+await ctx.telegram.sendMessage(chatIdFrom,"Imprimiendo docsFromsupplier");
 // await ctx.reply("Obteniendo información...");
 // await ctx.sendChatAction('typing');
 
