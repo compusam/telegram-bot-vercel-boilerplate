@@ -7,6 +7,7 @@ import createDebug from 'debug';
 // const groq = new Groq({
 //     apiKey: process.env.GROQ_API_KEY
 // });
+
 import { ChatGroq } from "@langchain/groq";
 import { ChatPromptTemplate } from "@langchain/core/prompts";
 import { SystemMessage, HumanMessage } from "@langchain/core/messages";
@@ -113,11 +114,14 @@ responseToolscalls?.forEach(function (value) {
 });
 await ctx.sendChatAction('typing');
 //  await ctx.reply("Revisando..., en breve revisaremos y te contestaremos");
+console.log("Iniciando la funcion getfragancefromsupplier");
+console.log("ChatsIds",chatId,chatIdFrom);
 const docsFromSupplier = await get_fragance_from_supplier(fragancename);
 
 // await ctx.reply("Obteniendo información...");
 // await ctx.sendChatAction('typing');
-console.log(docsFromSupplier);
+
+console.log("Imprimiendo docsFromsupplier",docsFromSupplier);
 const textToSplitFromSupplier = docsFromSupplier || "No tenemos ese perfume | |";
 const productPartsArray = textToSplitFromSupplier.split("|");
 let idProduct = productPartsArray[0];
