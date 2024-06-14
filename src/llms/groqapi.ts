@@ -1,4 +1,5 @@
 import { Context,Markup } from 'telegraf';
+
 import createDebug from 'debug';
 
 // Nativo del SDK de groq
@@ -26,8 +27,11 @@ const embeddings = new OpenAIEmbeddings({
 
 const debug = createDebug('bot:handleRequestGroqAPI');
 
+
 const groqapi = () => async (ctx: Context) => {
 // debug(ctx.message);
+const chatId = ctx.chat?.id;
+const chatIdFrom = ctx.from?.id;
 
 if('successful_payment' in ctx.message!){
   debug("El cliente pagó: ")
@@ -110,8 +114,9 @@ responseToolscalls?.forEach(function (value) {
 await ctx.sendChatAction('typing');
 //  await ctx.reply("Revisando..., en breve revisaremos y te contestaremos");
 const docsFromSupplier = await get_fragance_from_supplier(fragancename);
-await ctx.reply("Obteniendo información...");
-await ctx.sendChatAction('typing');
+
+// await ctx.reply("Obteniendo información...");
+// await ctx.sendChatAction('typing');
 console.log(docsFromSupplier);
 const textToSplitFromSupplier = docsFromSupplier || "No tenemos ese perfume | |";
 const productPartsArray = textToSplitFromSupplier.split("|");

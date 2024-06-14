@@ -12,7 +12,9 @@ import { Update } from 'telegraf/typings/core/types/typegram';
 const BOT_TOKEN = process.env.BOT_TOKEN || '';
 const ENVIRONMENT = process.env.NODE_ENV || '';
 const debug = createDebug('bot:handleRequest');
-const bot = new Telegraf(BOT_TOKEN);
+const bot = new Telegraf(BOT_TOKEN,{
+  handlerTimeout: Infinity // or Number.POSITIVE_INIFINITY
+});
 const VERCEL_URL = `${process.env.VERCEL_URL}`;
 // for description BOT
 try {
