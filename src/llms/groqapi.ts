@@ -99,6 +99,7 @@ let fragancename = ""
       ),
       new HumanMessage(ctx.text || "¿Cuál perfume me recomiendas para caballero?"),
     ]);
+    console.error("Dump response_tools",JSON.stringify(response_tools));
     let responseToolscalls = response_tools.tool_calls
 
     // debug(responseToolscalls)
