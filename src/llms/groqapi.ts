@@ -196,6 +196,7 @@ let fragancename = null || "";
   } catch (e) {
     // Length error
     console.log("Error de funcion ",JSON.stringify(e));
+    await ctx.reply("¡Hola! Soy un vendedor de perfumes y fragancias de BonaFragance. ¿En qué puedo ayudarte hoy? ¿Buscas un perfume para ti o para alguien especial?");
   }
  
 
