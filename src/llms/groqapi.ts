@@ -110,7 +110,7 @@ let fragancename = null || "";
    
     });
 
-    let docsFromSupplier = null;
+    let docsFromSupplier:any = null;
     try {
       docsFromSupplier = await get_fragance_from_supplier(fragancename);
     }
