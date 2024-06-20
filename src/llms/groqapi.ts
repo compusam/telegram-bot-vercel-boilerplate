@@ -195,7 +195,7 @@ let fragancename = null || "";
 
   } catch (e) {
     // Length error
-    console.log(e);
+    console.log("Error de funcion ",JSON.stringify(e));
   }
  
 
