@@ -120,14 +120,48 @@ let fragancename = null || "";
 
 
     console.log("Imprimiendo docsFromsupplier",docsFromSupplier);
-    const textToSplitFromSupplier = docsFromSupplier || "No tenemos ese perfume | |";
-    const productPartsArray = textToSplitFromSupplier.split("|");
-    let idProduct = productPartsArray[0];
-    let imageProduct = productPartsArray[1];
-    let titleProduct = productPartsArray[2];
-    let priceProduct = productPartsArray[3];
-    const textToLLMClient = "El perfume "+titleProduct+ " tiene un precio de venta de $"+parseInt(priceProduct).toString()+" pesos mexicanos"
-
+    // para cuando no haya perfume en stock
+    let textToLLMClient = null;
+    let invoice: any;
+    let replyOptions: any;
+    if (docsFromSupplier !== null) {
+      const textToSplitFromSupplier = docsFromSupplier || "No tenemos ese perfume | |";
+      const productPartsArray = textToSplitFromSupplier.split("|");
+      let idProduct = productPartsArray[0];
+      let imageProduct = productPartsArray[1];
+      let titleProduct = productPartsArray[2];
+      let priceProduct = productPartsArray[3];
+      let textToLLMClient = "El perfume "+titleProduct+ " tiene un precio de venta de $"+parseInt(priceProduct).toString()+" pesos mexicanos"
+      
+      // para realizar el invoice
+      const provider_token = process.env.PROVIDER_TOKEN || "sin Token";
+  // const getInvoice = (ptoken: string, id: string,titleDescription: string,price: bigint ) => {
+      invoice = {
+        chat_id: ctx.chat?.id, // Unique identifier of the target chat or username of the target channel
+        provider_token: provider_token, // token issued via bot @SberbankPaymentBot
+        start_parameter: 'get_access', // Unique parameter for deep links. If you leave this field blank, forwarded copies of the forwarded message will have a Pay button that allows multiple users to pay directly from the forwarded message using the same account. If not empty, redirected copies of the sent message will have a URL button with a deep link to the bot (instead of a payment button) with a value used as an initial parameter.
+        title: titleProduct, // Product name, 1-32 characters
+        description: titleProduct, // Product description, 1-255 characters
+        photo_url: imageProduct,
+        need_email: true,
+        send_email_to_provider: true,
+        currency: 'MXN', // ISO 4217 Three-Letter Currency Code
+        prices: [{ label: titleProduct, amount: parseInt(priceProduct) * 100 }], // Price breakdown, serialized list of components in JSON format 100 kopecks * 100 = 100 rubles
+        total_amount:  parseInt(priceProduct) * 100,
+        payload: JSON.stringify( { // The payload of the invoice, as determined by the bot, 1-128 bytes. This will not be visible to the user, use it for your internal processes.
+          unique_id: `${ctx.chat?.id}_${Number(new Date())}`,
+          username: ctx.from?.username
+        })
+      }
+      replyOptions = Markup.inlineKeyboard([
+        Markup.button.pay("Comprar $"+priceProduct+' MXN'),
+      
+      ]);
+    }
+    else {
+      textToLLMClient = "No tenemos ese perfume";
+    }
+    
     const systemMessageTemplate = `
     Actúa como un vendedor con amplia experiencia en venta de perfumes y fragancias para hombre y dama, siempre debes responder en nombre de BonaFragance.
     Los precios son en pesos mexicanos o MXN.
@@ -166,32 +200,13 @@ let fragancename = null || "";
       console.log(responseLLM); 
 
 
-      const provider_token = process.env.PROVIDER_TOKEN || "sin Token";
-  // const getInvoice = (ptoken: string, id: string,titleDescription: string,price: bigint ) => {
-      const invoice = {
-        chat_id: ctx.chat?.id, // Unique identifier of the target chat or username of the target channel
-        provider_token: provider_token, // token issued via bot @SberbankPaymentBot
-        start_parameter: 'get_access', // Unique parameter for deep links. If you leave this field blank, forwarded copies of the forwarded message will have a Pay button that allows multiple users to pay directly from the forwarded message using the same account. If not empty, redirected copies of the sent message will have a URL button with a deep link to the bot (instead of a payment button) with a value used as an initial parameter.
-        title: titleProduct, // Product name, 1-32 characters
-        description: titleProduct, // Product description, 1-255 characters
-        photo_url: imageProduct,
-        need_email: true,
-        send_email_to_provider: true,
-        currency: 'MXN', // ISO 4217 Three-Letter Currency Code
-        prices: [{ label: titleProduct, amount: parseInt(priceProduct) * 100 }], // Price breakdown, serialized list of components in JSON format 100 kopecks * 100 = 100 rubles
-        total_amount:  parseInt(priceProduct) * 100,
-        payload: JSON.stringify( { // The payload of the invoice, as determined by the bot, 1-128 bytes. This will not be visible to the user, use it for your internal processes.
-          unique_id: `${ctx.chat?.id}_${Number(new Date())}`,
-          username: ctx.from?.username
-        })
-      }
-      const replyOptions = Markup.inlineKeyboard([
-        Markup.button.pay("Comprar $"+priceProduct+' MXN'),
       
-      ]);
       
       await ctx.reply(responseLLM.content.toString());
-      const replyInvoiceResponse = await ctx.replyWithInvoice(invoice,replyOptions);
+      if (docsFromSupplier !== null) {
+        const replyInvoiceResponse = await ctx.replyWithInvoice(invoice,replyOptions);
+      }
+      
 
 
   } catch (e) {
