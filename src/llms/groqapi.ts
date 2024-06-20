@@ -91,26 +91,32 @@ else
     tool_choice: {"type": "function", "function": {"name":"get_fragance_from_supplier"}},
   });
 
-
-  
- const response_tools = await chat.invoke([
-        new SystemMessage(
-          "Eres un vendedor profesional de perfumes para dama y caballero. Debes brindar respuesta a los usuarios que preguntan por perfumes, los precios y usos de cada perfume además dependiendo la fecha recomendar alguna fragancia para el día o la noche.\nLa respuesta debe ser desde la tienda de BonaFragance, las respuestas deben ser breves y concisas."
-        ),
-        new HumanMessage(ctx.text || "¿Cuál perfume me recomiendas para caballero?"),
-      ]);
-
-// console.log(response_tools.tool_calls)
-// await ctx.reply("Revisando...");
-let responseToolscalls = response_tools.tool_calls
 let fragancename = ""
-// debug(responseToolscalls)
-responseToolscalls?.forEach(function (value) {
-    // console.log(value.name);
-    // console.log(value.args.fragancename);
+  try {
+    const response_tools = await chat.invoke([
+      new SystemMessage(
+        "Eres un vendedor profesional de perfumes para dama y caballero. Debes brindar respuesta a los usuarios que preguntan por perfumes, los precios y usos de cada perfume además dependiendo la fecha recomendar alguna fragancia para el día o la noche.\nLa respuesta debe ser desde la tienda de BonaFragance, las respuestas deben ser breves y concisas."
+      ),
+      new HumanMessage(ctx.text || "¿Cuál perfume me recomiendas para caballero?"),
+    ]);
+    let responseToolscalls = response_tools.tool_calls
+
+    // debug(responseToolscalls)
+    responseToolscalls?.forEach(function (value) {
+        // console.log(value.name);
+        // console.log(value.args.fragancename);
     fragancename = value.args.fragancename
    
 });
+  } catch (e) {
+    // Length error
+    console.log(e);
+  }
+ 
+
+// console.log(response_tools.tool_calls)
+// await ctx.reply("Revisando...");
+
 // await ctx.sendChatAction('typing');
 //  await ctx.reply("Revisando..., en breve revisaremos y te contestaremos");
 // console.log("Iniciando la funcion getfragancefromsupplier");
