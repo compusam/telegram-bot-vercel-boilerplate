@@ -154,7 +154,7 @@ let fragancename = null || "";
         })
       }
       replyOptions = Markup.inlineKeyboard([
-        Markup.button.pay("Comprar $"+priceProduct+' MXN'),
+        Markup.button.pay("Comprar $"+parseInt(priceProduct)+' MXN'),
       
       ]);
     }
