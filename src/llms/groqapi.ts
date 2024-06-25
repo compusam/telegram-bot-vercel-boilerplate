@@ -162,7 +162,7 @@ let fragancename = null || "";
       textToLLMClient = "No tenemos ese perfume";
     }
     
-    textToLLMClient = textToLLMClient || "No tenemos ese perfume";
+    textToLLMClient = textToLLMClient || "Perfume para dama y/o caballero";
     const systemMessageTemplate = `
     Actúa como un vendedor con amplia experiencia en venta de perfumes y fragancias para hombre y dama, siempre debes responder en nombre de BonaFragance.
     Los precios son en pesos mexicanos o MXN.
