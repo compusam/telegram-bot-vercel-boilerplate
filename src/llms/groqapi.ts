@@ -180,7 +180,7 @@ let fragancename = null || "";
     De no encontrar la información del perfume o fragancia en el context debes mencionar que por el momento no tenemos ese perfume hacia el usuario.
     Recuerda eres un experto vendedor de perfumes, fragancias, todo lo relacionado a perfumería.
     `;
-    // console.log(systemMessageTemplate);
+    console.log(systemMessageTemplate);
 
     
     const chatModel = new ChatGroq({
