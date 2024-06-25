@@ -131,7 +131,7 @@ let fragancename = null || "";
       let imageProduct = productPartsArray[1];
       let titleProduct = productPartsArray[2];
       let priceProduct = productPartsArray[3];
-      let textToLLMClient = "El perfume "+titleProduct+ " tiene un precio de venta de $"+parseInt(priceProduct).toString()+" pesos mexicanos"
+      textToLLMClient = "El perfume "+titleProduct+ " tiene un precio de venta de $"+parseInt(priceProduct).toString()+" pesos mexicanos"
       
       // para realizar el invoice
       const provider_token = process.env.PROVIDER_TOKEN || "sin Token";
@@ -162,6 +162,7 @@ let fragancename = null || "";
       textToLLMClient = "No tenemos ese perfume";
     }
     
+    textToLLMClient = textToLLMClient || "No tenemos ese perfume";
     const systemMessageTemplate = `
     Actúa como un vendedor con amplia experiencia en venta de perfumes y fragancias para hombre y dama, siempre debes responder en nombre de BonaFragance.
     Los precios son en pesos mexicanos o MXN.
