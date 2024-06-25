@@ -186,7 +186,7 @@ let fragancename = null || "";
     const chatModel = new ChatGroq({
         model: "llama3-8b-8192",
         apiKey: process.env.GROQ_API_KEY,
-        temperature: 0.1,
+        temperature: 0,
 
       }); 
 
