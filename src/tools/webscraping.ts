@@ -29,7 +29,7 @@ async function get_fragance_from_supplier(fragancename: string) {
           const product = docsRaw(el)
           const productImage = product.find('img.card-image').attr('data-src')?.toString().replaceAll("224x224","1280x1280");
           const productTitle = product.find('img.card-image').attr('title');
-          const productPrice = parseInt(product.find('span.price').text().slice(1).replaceAll(",","").trim()) * 1.3;
+          const productPrice = parseInt(product.find('span.price').text().slice(1).replaceAll(",","").trim()) / 0.7;
           const productId = product.find('a.btnQV').attr('data-product-id');
           // console.log(productId, productTitle, productImage, productPrice);
           productText = productId+'|'+productImage+'|'+productTitle+'|'+productPrice;
