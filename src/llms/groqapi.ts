@@ -10,7 +10,7 @@ import createDebug from 'debug';
 import { ChatGroq } from "@langchain/groq";
 import { ChatPromptTemplate } from "@langchain/core/prompts";
 import { SystemMessage, HumanMessage } from "@langchain/core/messages";
-import { get_fragance_from_supplier } from '../tools';
+import { get_fragance_from_supplier,db } from '../tools';
 // import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
 // import { HtmlToTextTransformer } from "@langchain/community/document_transformers/html_to_text";
 // import { MemoryVectorStore } from "langchain/vectorstores/memory";
@@ -206,6 +206,9 @@ let fragancename = null || "";
       await ctx.reply(responseLLM.content.toString());
       if (docsFromSupplier !== null) {
         const replyInvoiceResponse = await ctx.replyWithInvoice(invoice,replyOptions);
+        console.log("Rows de Nocodb");
+        const dataDB = await db();
+        console.log(dataDB);
       }
       
 
