@@ -207,7 +207,7 @@ let fragancename = null || "";
       if (docsFromSupplier !== null) {
         const replyInvoiceResponse = await ctx.replyWithInvoice(invoice,replyOptions);
         console.log("Rows de Nocodb");
-        const dataDB = await db();
+        const dataDB = db();
         // console.log(dataDB);
       }
       

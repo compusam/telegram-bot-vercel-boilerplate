@@ -20,7 +20,7 @@ const api = new Api({
 // });
 
 
-async function db() {
+function db() {
     console.log("Trayendonos la informacion de la tabla de NOCODB");
     api.dbViewRow.list(
         "noco",
