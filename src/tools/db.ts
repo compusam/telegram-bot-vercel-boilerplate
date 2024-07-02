@@ -22,15 +22,19 @@ const api = new Api({
 
 async function db() {
     console.log("Trayendonos la informacion de la tabla de NOCODB");
-    const dblistrecords = api.dbViewRow.list(
+    api.dbViewRow.list(
         "noco",
         "pm4z2ssobly3xgr",
         "mdr598byvtzokok",
         "vw8cm02uhhxf5bs2", {
           "offset": 0,
           "where": ""
+      }).then(function (data) {
+        console.log(data);
+      }).catch(function (error) {
+        console.error(error);
       });
-      console.log(dblistrecords);
+    
    
       
     }
