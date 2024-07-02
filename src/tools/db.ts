@@ -6,18 +6,18 @@ const api = new Api({
   }
 })
 
-api.dbViewRow.list(
-  "noco",
-  "pm4z2ssobly3xgr",
-  "mdr598byvtzokok",
-  "vw8cm02uhhxf5bs2", {
-    "offset": 0,
-    "where": ""
-}).then(function (data) {
-  console.log(data);
-}).catch(function (error) {
-  console.error(error);
-});
+// api.dbViewRow.list(
+//   "noco",
+//   "pm4z2ssobly3xgr",
+//   "mdr598byvtzokok",
+//   "vw8cm02uhhxf5bs2", {
+//     "offset": 0,
+//     "where": ""
+// }).then(function (data) {
+//   console.log(data);
+// }).catch(function (error) {
+//   console.error(error);
+// });
 
 
 async function db() {

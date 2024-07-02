@@ -208,7 +208,7 @@ let fragancename = null || "";
         const replyInvoiceResponse = await ctx.replyWithInvoice(invoice,replyOptions);
         console.log("Rows de Nocodb");
         const dataDB = await db();
-        console.log(dataDB);
+        // console.log(dataDB);
       }
       
 
