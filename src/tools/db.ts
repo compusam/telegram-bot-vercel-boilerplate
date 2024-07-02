@@ -18,7 +18,12 @@
 // }).catch(function (error) {
 //   console.error(error);
 // });
-
+const options = {
+  method: 'GET',
+  headers: {
+    'xc-token': process.env.NOCODB_API_KEY
+  }
+};
 
 function db() {
     console.log("Trayendonos la informacion de la tabla de NOCODB");
@@ -34,12 +39,7 @@ function db() {
     //   }).catch(function (error) {
     //     console.error(error);
     //   });
-    const options = {
-      method: 'GET',
-      headers: {
-        'xc-token': process.env.NOCODB_API_KEY
-      }
-    };
+   
     
     fetch('https://app.nocodb.com/api/v2/tables/mdr598byvtzokok/records?offset=0&limit=25&where=&viewId=vw8cm02uhhxf5bs2', options)
       .then(response => response.json())
